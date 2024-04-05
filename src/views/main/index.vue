@@ -1,10 +1,9 @@
 <template>
-  <div class="">这是首页的内容</div>
+  <div>
+    <navigation-vue></navigation-vue>
+  </div>
 </template>
 
 <script setup>
-import { defineOptions } from 'vue'
-defineOptions({ name: 'index' })
+import navigationVue from './components/navigation/index.vue'
 </script>
-
-<style lang="scss" scoped></style>
