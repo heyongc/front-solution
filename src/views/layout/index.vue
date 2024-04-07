@@ -11,5 +11,8 @@
 import headerVue from './components/header/index.vue'
 import mainVue from './components/main.vue'
 import floatingVue from './components/floating/index.vue'
-import {} from 'vue'
+import { defineOptions } from 'vue'
+defineOptions({
+  name: 'layout'
+})
 </script>
