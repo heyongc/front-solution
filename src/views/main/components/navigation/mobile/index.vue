@@ -2,6 +2,7 @@
   <div class="bg-white sticky top-0 left-0 z-10">
     <ul
       class="relative flex overflow-x-auto p-1 text-xs text-zinc-600 overflow-hidden"
+      ref="ulTarget"
     >
       <!-- 汉堡按钮 -->
       <li
@@ -9,11 +10,24 @@
       >
         <m-svg-icon class="w-1.5 h-1.5" name="hamburger"></m-svg-icon>
       </li>
+
+      <!-- 滑块 -->
+      <li
+        ref="sliderTarget"
+        class="absolute h-[22px] bg-zinc-900 rounded-lg duration-200"
+        :style="sliderStyle"
+      ></li>
+
       <!-- category item -->
       <li
-        v-for="item in data"
+        v-for="(item, index) in data"
         :key="item.id"
+        :ref="setItemRef"
         class="shrink-0 px-1.5 py-0.5 z-10 duration-200 last:mr-4"
+        :class="{
+          'text-zinc-100 ': currentCategoryIndex === index
+        }"
+        @click="onItemClick(index)"
       >
         {{ item.name }}
       </li>
@@ -22,10 +36,49 @@
 </template>
 
 <script setup>
+import { ref, watch, onBeforeUpdate } from 'vue'
+import { useScroll } from '@vueuse/core'
+
 defineProps({
   data: {
     type: Array,
     required: true
   }
 })
+
+// 滑块
+const sliderStyle = ref({
+  transform: 'translateX(0px)',
+  width: '48.75px'
+})
+
+// 选中的 item 下标
+const currentCategoryIndex = ref(0)
+// 获取填充的所有 item 元素
+let itemRefs = []
+const setItemRef = (el) => {
+  if (el) {
+    itemRefs.push(el)
+  }
+}
+onBeforeUpdate(() => {
+  itemRefs = []
+})
+// 获取 ul 元素，以计算偏移位置
+const ulTarget = ref(null)
+const { x: ulScrollLeft } = useScroll(ulTarget)
+watch(currentCategoryIndex, (val) => {
+  // 获取选中元素的 left、width
+  const { left, width } = itemRefs[val].getBoundingClientRect()
+  // 为 sliderStyle 设置属性
+  sliderStyle.value = {
+    // ul 横向滚动位置 + 当前元素的 left 偏移量
+    transform: `translateX(${ulScrollLeft.value + left - 9.75 + 'px'})`,
+    width: width + 'px'
+  }
+})
+// item 点击事件
+const onItemClick = (index) => {
+  currentCategoryIndex.value = index
+}
 </script>
