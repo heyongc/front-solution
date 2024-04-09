@@ -2,24 +2,27 @@
   <m-popover>
     <template #reference>
       <m-svg-icon
-        name="theme-light"
-        class="guide-theme w-4 h-4 p-1 cursor-pointer rounded-sm duration-200 outline-none hover:bg-zinc-100/60"
-        fillClass="fill-zinc-900"
+        :name="svgIconName"
+        class="guide-theme w-4 h-4 p-1 cursor-pointer rounded-sm duration-200 outline-none hover:bg-zinc-100/60 dark:hover:bg-zinc-900"
+        fillClass="fill-zinc-900 dark:fill-zinc-300"
       ></m-svg-icon>
     </template>
 
     <div class="w-[140px] overflow-hidden">
       <div
-        class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60"
+        class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-800"
         v-for="item in themeArr"
         :key="item.id"
+        @click="onItemClick(item)"
       >
         <m-svg-icon
           :name="item.icon"
           class="w-1.5 h-1.5 mr-1"
-          fillClass="fill-zinc-900"
+          fillClass="fill-zinc-900 dark:fill-zinc-300"
         ></m-svg-icon>
-        <span class="text-zinc-800 text-sm">{{ item.name }}</span>
+        <span class="text-zinc-800 text-sm dark:text-zinc-300">{{
+          item.name
+        }}</span>
       </div>
     </div>
   </m-popover>
@@ -27,6 +30,8 @@
 
 <script setup>
 import { THEME_DARK, THEME_LIGHT, THEME_SYSTEM } from '@/constants'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 
 defineOptions({
   name: 'header-theme'
@@ -53,4 +58,22 @@ const themeArr = [
     name: '跟随系统'
   }
 ]
+
+/**
+ * menu 切换事件
+ * @param {*} theme
+ */
+const onItemClick = (theme) => {
+  store.commit('theme/changeThemeType', theme.type)
+}
+
+// 控制图标展示
+const store = useStore()
+const svgIconName = computed(() => {
+  // 根据当前的 themeType 返回当前的选中 icon
+  const findTheme = themeArr.find((theme) => {
+    return theme.type === store.getters.themeType
+  })
+  return findTheme.icon
+})
 </script>
