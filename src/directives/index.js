@@ -1,5 +1,3 @@
-import lazy from './modules/lazy'
-
 /**
  * 全局指令注册
  */
