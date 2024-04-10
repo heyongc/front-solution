@@ -19,6 +19,7 @@
 
 <script setup>
 import { useVModel, useIntersectionObserver } from '@vueuse/core'
+import { ref } from 'vue'
 
 defineOptions({ name: 'infinite-list' })
 
@@ -45,6 +46,7 @@ const laodingTarget = ref(null)
 useIntersectionObserver(
   laodingTarget,
   ([{ isIntersecting }], observerElement) => {
+    console.log('【isIntersecting】', isIntersecting)
     // 当加载更多的视图可见时，同时 loading 为 false，同时数据尚未全部加载完成
     // 当加载更多的视图可见时，加载更多数据
     if (isIntersecting && !loading.value && !props.isFinished) {
