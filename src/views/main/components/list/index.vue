@@ -32,7 +32,7 @@ import { isMobileTerminal } from '@/utils/flexible'
  */
 let query = {
   page: 1,
-  size: 5
+  size: 20
 }
 // 数据是否在加载中
 const isLoading = ref(false)

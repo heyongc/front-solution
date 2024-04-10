@@ -19,7 +19,7 @@
 
 <script setup>
 import { useVModel, useIntersectionObserver } from '@vueuse/core'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 defineOptions({ name: 'infinite-list' })
 
@@ -43,21 +43,43 @@ const loading = useVModel(props)
 
 // 滚动的元素
 const laodingTarget = ref(null)
+// 记录当前是否在底部（是否交叉）
+const targetIsIntersecting = ref(false)
 useIntersectionObserver(
   laodingTarget,
   ([{ isIntersecting }], observerElement) => {
     console.log('【isIntersecting】', isIntersecting)
-    // 当加载更多的视图可见时，同时 loading 为 false，同时数据尚未全部加载完成
-    // 当加载更多的视图可见时，加载更多数据
-    if (isIntersecting && !loading.value && !props.isFinished) {
-      console.log('onLoad')
-      // 修改加载数据标记
-      loading.value = true
-      // 触发加载更多行为
-      emits('onLoad')
-    }
+    // 获取当前交叉状态
+    targetIsIntersecting.value = isIntersecting
+    // 触发 load
+    emitLoad()
   }
 )
+
+/**
+ * 触发 load
+ */
+const emitLoad = () => {
+  // 当加载更多的视图可见时，同时 loading 为 false，同时数据尚未全部加载完成
+  // 当加载更多的视图可见时，加载更多数据
+  if (targetIsIntersecting.value && !loading.value && !props.isFinished) {
+    console.log('onLoad')
+    // 修改加载数据标记
+    loading.value = true
+    // 触发加载更多行为
+    emits('onLoad')
+  }
+}
+
+/**
+ * 监听 loading 的变化，解决数据加载完成后，首屏未铺满的问题
+ */
+watch(loading, (val) => {
+  // 触发 load，延迟处理，等待 渲染和 useIntersectionObserver 的再次触发
+  setTimeout(() => {
+    emitLoad()
+  }, 100)
+})
 </script>
 
 <style lang="scss" scoped></style>
