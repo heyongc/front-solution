@@ -281,9 +281,14 @@ const reset = () => {
 watch(
   () => props.column,
   () => {
-    // 在 picturePreReading 为 true 的前提下，需要首先为列宽滞空，列宽滞空之后，会取消瀑布流渲染
-    columnWidth.value = 0
-    reset()
+    if (props.picturePreReading) {
+      // 在 picturePreReading 为 true 的前提下，需要首先为列宽滞空，列宽滞空之后，会取消瀑布流渲染
+      columnWidth.value = 0
+      // 等待页面渲染之后，重新执行计算。否则在 item 没有指定过高度的前提下，计算出的 item 高度会不正确
+      nextTick(reset)
+    } else {
+      reset()
+    }
   }
 )
 </script>
