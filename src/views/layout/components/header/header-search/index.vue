@@ -18,6 +18,8 @@
           v-show="!inputValue"
           @itemClick="onSearchHandler"
         ></history-vue>
+        <!-- 推荐主题 -->
+        <theme-vue v-show="!inputValue"></theme-vue>
       </template>
     </m-search>
   </div>
@@ -27,6 +29,7 @@
 import { defineOptions, ref } from 'vue'
 import hintVue from './hint.vue'
 import historyVue from './history.vue'
+import themeVue from './theme.vue'
 import { useStore } from 'vuex'
 
 defineOptions({ name: 'header-search' })
