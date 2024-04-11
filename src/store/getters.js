@@ -19,5 +19,9 @@ export default {
   /**
    * 搜索记录
    */
-  historys: (state) => state.search.historys
+  historys: (state) => state.search.historys,
+  /**
+   * 搜索文本
+   */
+  searchText: (state) => state.app.searchText
 }
