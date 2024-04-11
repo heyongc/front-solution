@@ -9,6 +9,11 @@
           @itemClick="onSearchHandler"
         >
         </hint-vue>
+        <!-- 最近搜索 -->
+        <history-vue
+          v-show="!inputValue"
+          @itemClick="onSearchHandler"
+        ></history-vue>
       </template>
     </m-search>
   </div>
