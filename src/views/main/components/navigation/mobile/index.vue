@@ -69,7 +69,7 @@ onBeforeUpdate(() => {
 // 获取 ul 元素，以计算偏移位置
 const ulTarget = ref(null)
 const { x: ulScrollLeft } = useScroll(ulTarget)
-watch($store.getters.currentCategoryIndex, (val) => {
+watch(store.getters.currentCategoryIndex, (val) => {
   // 获取选中元素的 left、width
   const { left, width } = itemRefs[val].getBoundingClientRect()
   // 为 sliderStyle 设置属性
