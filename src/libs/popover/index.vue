@@ -42,6 +42,9 @@ const placementEnum = [
 
 import { ref, watch, nextTick } from 'vue'
 
+// const slots = useSlots()
+// console.log('【slots】', slots.default())
+
 const props = defineProps({
   // 控制气泡弹出位置，并给出开发者错误的提示
   placement: {

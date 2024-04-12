@@ -2,6 +2,7 @@
   <m-popover class="flex items-center" placement="bottom-left">
     <template #reference>
       <div
+        v-if="false"
         class="guide-my relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900"
       >
         <!-- 头像 -->
@@ -22,29 +23,40 @@
           class="w-1.5 h-1.5 absolute right-[16px] bottom-0"
         ></m-svg-icon>
       </div>
-    </template>
-
-    <div class="w-[140px] overflow-hidden">
-      <div
-        class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-800"
-        v-for="item in menuArr"
-        :key="item.id"
-      >
-        <m-svg-icon
-          :name="item.icon"
-          class="w-1.5 h-1.5 mr-1"
-          fillClass="fill-zinc-900 dark:fill-zinc-300"
-        ></m-svg-icon>
-        <span class="text-zinc-800 text-sm dark:text-zinc-300">{{
-          item.title
-        }}</span>
+      <div v-else>
+        <m-button
+          class="guide-my"
+          icon="profile"
+          iconColor="#fff"
+          @click="onToLogin"
+        ></m-button>
       </div>
-    </div>
+    </template>
+    <template v-if="false">
+      <div class="w-[140px] overflow-hidden">
+        <div
+          class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-800"
+          v-for="item in menuArr"
+          :key="item.id"
+        >
+          <m-svg-icon
+            :name="item.icon"
+            class="w-1.5 h-1.5 mr-1"
+            fillClass="fill-zinc-900 dark:fill-zinc-300"
+          ></m-svg-icon>
+          <span class="text-zinc-800 text-sm dark:text-zinc-300">{{
+            item.title
+          }}</span>
+        </div>
+      </div>
+    </template>
   </m-popover>
 </template>
 
 <script setup>
 import { defineOptions } from 'vue'
+import { useRouter } from 'vue-router'
+
 defineOptions({ name: 'header-my' })
 // 构建 menu 数据源
 const menuArr = [
@@ -67,6 +79,14 @@ const menuArr = [
     path: ''
   }
 ]
+
+const router = useRouter()
+
+// 进入登录
+const onToLogin = () => {
+  console.log('【onToLogin】')
+  router.push('/login')
+}
 </script>
 
 <style lang="scss" scoped></style>
