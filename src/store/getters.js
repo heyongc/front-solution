@@ -27,5 +27,9 @@ export default {
   /**
    * token
    */
-  token: (state) => state.user.token
+  token: (state) => state.user.token,
+  /**
+   * 获取用户信息
+   */
+  userInfo: (state) => state.user.userInfo
 }

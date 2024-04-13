@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '@/store'
 
 const service = axios.create({
   // baseURL: 'https://api.imooc-front.lgdsunday.club/api',
@@ -12,6 +13,10 @@ console.log('【import.meta.env.VITE_BASE_API】', import.meta.env.VITE_BASE_API
 // 请求拦截器
 service.interceptors.request.use((config) => {
   config.headers.icode = 'helloqianduanxunlianying'
+  if (store.getters.token) {
+    //如果token存在 注入token
+    config.headers.Authorization = `Bearer ${store.getters.token}`
+  }
   return config
 })
 
