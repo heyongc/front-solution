@@ -21,7 +21,7 @@ const store = createStore({
     createdPersistedState({
       // 保存到 localStorage 中的 key
       key: 'imooc-front',
-      paths: ['category', 'theme', 'search']
+      paths: ['category', 'theme', 'search', 'user']
     })
   ]
 })

@@ -27,7 +27,7 @@
           >
             <img
               v-lazy
-              :src="userInfo.avatar"
+              :src="$store.getters.userInfo.avatar"
               alt=""
               class="rounded-[50%] w-full h-full xl:inline-block"
             />
