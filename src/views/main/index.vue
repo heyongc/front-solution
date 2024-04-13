@@ -51,6 +51,7 @@ import listVue from './components/list/index.vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useScroll } from '@vueuse/core'
+import { onActivated, ref } from 'vue'
 
 const store = useStore()
 const router = useRouter()
