@@ -126,8 +126,10 @@ const onCaptchaSuccess = async () => {
 const loading = ref(false)
 // 用户输入的用户名和密码
 const loginForm = ref({
-  username: 'LGD_Sunday',
-  password: '123123'
+  // username: 'LGD_Sunday',
+  // password: '123123',
+  username: 'hyc_123',
+  password: '12345678'
 })
 
 /**

@@ -26,4 +26,6 @@ const store = createStore({
   ]
 })
 
+console.log('【store】', store)
+
 export default store
