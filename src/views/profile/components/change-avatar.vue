@@ -98,7 +98,8 @@ const putObjectToOSS = async (file) => {
     ossClient = await getOSSClient()
   }
   try {
-    // 因为当前凭证只具备 images 文件夹下的访问权限，所以图片需要上传到 images/xxx.xx 。否则你将得到一个 《AccessDeniedError: You have no right to access this object because of bucket acl.》 的错误
+    // 因为当前凭证只具备 images 文件夹下的访问权限，所以图片需要上传到 images/xxx.xx 。
+    // 否则你将得到一个 《AccessDeniedError: You have no right to access this object because of bucket acl.》 的错误
     const fileTypeArr = file.type.split('/')
     const fileName = `${store.getters.userInfo.username}/${Date.now()}.${
       fileTypeArr[fileTypeArr.length - 1]

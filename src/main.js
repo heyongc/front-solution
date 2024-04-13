@@ -4,9 +4,9 @@ import router from './router'
 import store from './store'
 import mLibs from './libs'
 import mDirective from './directives'
-
 import { useREM } from './utils/flexible'
 import useTheme from './utils/theme'
+import './permission'
 
 import './styles/index.scss'
 import 'virtual:svg-icons-register'

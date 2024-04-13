@@ -243,7 +243,10 @@ const userInfo = ref(store.getters.userInfo)
 const loading = ref(false)
 const onChangeProfile = async () => {
   loading.value = true
-  await putProfile(store.getters.userInfo)
+
+  userInfo.value.avatar = store.getters.userInfo.avatar
+
+  await putProfile(userInfo.value)
   message('success', '用户信息修改成功')
   // 更新 vuex
   store.commit('user/setUserInfo', userInfo.value)
