@@ -1,9 +1,17 @@
 <template>
   <!-- 路由出口 -->
   <router-view v-slot="{ Component }">
-    <transition :name="transitionName">
-      <keep-alive>
-        <component :is="Component"></component>
+    <transition
+      :name="transitionName"
+      @before-enter="beforeEnter"
+      @after-leave="afterLeave"
+    >
+      <keep-alive :include="virtualTaskStack">
+        <component
+          :is="Component"
+          :class="{ 'fixed top-0 left-0 w-screen z-50': isAnimation }"
+          :key="$route.fullPath"
+        ></component>
       </keep-alive>
     </transition>
   </router-view>
@@ -50,6 +58,9 @@ const props = defineProps({
   }
 })
 
+// 任务栈
+const virtualTaskStack = ref([props.mainComponentName])
+
 const router = useRouter()
 // 跳转动画
 const transitionName = ref('')
@@ -61,7 +72,36 @@ const transitionName = ref('')
 router.beforeEach((to, from) => {
   // 定义当前动画名称
   transitionName.value = props.routerType
+
+  if (props.routerType === PUSH) {
+    // 入栈
+    virtualTaskStack.value.push(to.name)
+  } else if (props.routerType === BACK) {
+    // 出栈
+    virtualTaskStack.value.pop()
+  }
+
+  // 进入首页默认清空栈
+  if (to.name === props.mainComponentName) {
+    clearTask()
+  }
 })
+
+// 处理动画状态变化
+const isAnimation = ref(false)
+const beforeEnter = () => {
+  isAnimation.value = true
+}
+const afterLeave = () => {
+  isAnimation.value = false
+}
+
+/**
+ * 清空栈
+ */
+const clearTask = () => {
+  virtualTaskStack.value = [props.mainComponentName]
+}
 </script>
 
 <style lang="scss" scoped>
