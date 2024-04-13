@@ -41,4 +41,24 @@
 import { isMobileTerminal } from '@/utils/flexible'
 import navigationVue from './components/navigation/index.vue'
 import listVue from './components/list/index.vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+
+const store = useStore()
+const router = useRouter()
+
+/**
+ * 我的按钮点击事件
+ */
+const onMyClick = () => {
+  // 配置跳转方式
+  store.commit('app/changeRouterType', 'push')
+  if (store.getters.token) {
+    router.push('/profile')
+  } else {
+    router.push('/login')
+  }
+}
+
+const onVipClick = () => {}
 </script>

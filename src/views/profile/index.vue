@@ -214,6 +214,8 @@ watch(isDialogVisible, (val) => {
  * 移动端后退处理
  */
 const onNavbarLeftClick = () => {
+  // 配置跳转方式
+  store.commit('app/changeRouterType', 'back')
   router.back()
 }
 

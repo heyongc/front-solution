@@ -69,16 +69,19 @@ onBeforeUpdate(() => {
 // 获取 ul 元素，以计算偏移位置
 const ulTarget = ref(null)
 const { x: ulScrollLeft } = useScroll(ulTarget)
-watch(store.getters.currentCategoryIndex, (val) => {
-  // 获取选中元素的 left、width
-  const { left, width } = itemRefs[val].getBoundingClientRect()
-  // 为 sliderStyle 设置属性
-  sliderStyle.value = {
-    // ul 横向滚动位置 + 当前元素的 left 偏移量
-    transform: `translateX(${ulScrollLeft.value + left - 9.75 + 'px'})`,
-    width: width + 'px'
+watch(
+  () => store.getters.currentCategoryIndex,
+  (val) => {
+    // 获取选中元素的 left、width
+    const { left, width } = itemRefs[val].getBoundingClientRect()
+    // 为 sliderStyle 设置属性
+    sliderStyle.value = {
+      // ul 横向滚动位置 + 当前元素的 left 偏移量
+      transform: `translateX(${ulScrollLeft.value + left - 9.75 + 'px'})`,
+      width: width + 'px'
+    }
   }
-})
+)
 
 // item 点击事件
 const onItemClick = (item) => {
