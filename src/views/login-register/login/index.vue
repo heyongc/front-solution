@@ -17,10 +17,11 @@
         <vee-field
           class="dark:bg-zinc-800 dark:text-zinc-400 border-b-zinc-400 border-b-[1px] w-full outline-0 pb-1 px-1 text-base focus:border-b-main dark:focus:border-b-zinc-200 xl:dark:bg-zinc-900"
           name="username"
+          :rules="validateUsername"
           type="text"
           placeholder="用户名"
           autocomplete="on"
-          :rules="validateUsername"
+          v-model="loginForm.username"
         />
         <vee-error-message
           class="text-sm text-red-600 block mt-0.5 text-left"
@@ -30,10 +31,11 @@
         <vee-field
           class="dark:bg-zinc-800 dark:text-zinc-400 border-b-zinc-400 border-b-[1px] w-full outline-0 pb-1 px-1 text-base focus:border-b-main dark:focus:border-b-zinc-200 xl:dark:bg-zinc-900"
           name="password"
+          :rules="validatePassword"
           type="password"
           placeholder="密码"
           autocomplete="on"
-          :rules="validatePassword"
+          v-model="loginForm.password"
         />
         <vee-error-message
           class="text-sm text-red-600 block mt-0.5 text-left"
@@ -49,7 +51,11 @@
           </a>
         </div>
 
-        <m-button class="w-full dark:bg-zinc-900 xl:dark:bg-zinc-800">
+        <m-button
+          class="w-full dark:bg-zinc-900 xl:dark:bg-zinc-800"
+          :loading="loading"
+          :isActiveAnim="false"
+        >
           登录
         </m-button>
       </vee-form>
@@ -81,10 +87,16 @@ import {
 import { validateUsername, validatePassword } from '../validate'
 import sliderCaptchaVue from './slider-captcha.vue'
 import { ref } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import { LOGIN_TYPE_USERNAME } from '@/constants'
 
 defineOptions({
   name: 'login'
 })
+
+const store = useStore()
+const router = useRouter()
 
 // 控制 sliderCaptcha 展示
 const isSliderCaptchaVisible = ref(false)
@@ -94,7 +106,10 @@ const isSliderCaptchaVisible = ref(false)
  */
 const onLoginHandler = () => {
   console.log('【触发登录】')
-  isSliderCaptchaVisible.value = true
+  // isSliderCaptchaVisible.value = true
+
+  // TODO 测试 跳过验证码
+  onLogin()
 }
 
 /**
@@ -103,6 +118,31 @@ const onLoginHandler = () => {
 const onCaptchaSuccess = async () => {
   isSliderCaptchaVisible.value = false
   // 登录操作
-  console.log('执行登录操作')
+  onLogin()
+}
+
+// 登录时的 loading
+const loading = ref(false)
+// 用户输入的用户名和密码
+const loginForm = ref({
+  username: 'LGD_Sunday',
+  password: '123123'
+})
+
+/**
+ * 用户登录行为
+ */
+const onLogin = async () => {
+  loading.value = true
+  // 执行登录操作
+  try {
+    await store.dispatch('user/login', {
+      ...loginForm.value,
+      loginType: LOGIN_TYPE_USERNAME
+    })
+  } finally {
+    loading.value = false
+  }
+  router.push('/')
 }
 </script>

@@ -8,13 +8,6 @@ export const ALL_CATEGORY_ITEM = {
   name: '全部'
 }
 
-// 暗黑主题
-export const THEME_DARK = 'dark'
-// 浅色主题
-export const THEME_LIGHT = 'light'
-// 系统主题
-export const THEME_SYSTEM = 'system'
-
 // 初始 category 数据
 export const CATEGORY_NOMAR_DATA = [
   ALL_CATEGORY_ITEM,
@@ -41,3 +34,16 @@ export const CATEGORY_NOMAR_DATA = [
     name: '家居/家装'
   }
 ]
+
+// 暗黑主题
+export const THEME_DARK = 'dark'
+// 浅色主题
+export const THEME_LIGHT = 'light'
+// 系统主题
+export const THEME_SYSTEM = 'system'
+
+// 登录方式
+export const LOGIN_TYPE_USERNAME = 'username'
+export const LOGIN_TYPE_OAUTH_NO_REGISTER_CODE = 204
+export const LOGIN_TYPE_QQ = 'QQ'
+export const LOGIN_TYPE_WX = 'WX'

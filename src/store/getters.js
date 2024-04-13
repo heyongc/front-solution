@@ -23,5 +23,9 @@ export default {
   /**
    * 搜索文本
    */
-  searchText: (state) => state.app.searchText
+  searchText: (state) => state.app.searchText,
+  /**
+   * token
+   */
+  token: (state) => state.user.token
 }
