@@ -107,10 +107,10 @@ const isSliderCaptchaVisible = ref(false)
  */
 const onLoginHandler = () => {
   console.log('【触发登录】')
-  // isSliderCaptchaVisible.value = true
+  isSliderCaptchaVisible.value = true
 
   // TODO 测试 跳过验证码
-  onLogin()
+  // onLogin()
 }
 
 /**

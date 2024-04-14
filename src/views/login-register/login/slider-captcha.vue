@@ -45,7 +45,7 @@ onMounted(() => {
         behavior: arr
       })
       if (res) {
-        emit(EMITS_SUCCESS)
+        emits(EMITS_SUCCESS)
       }
     },
     // 用户拼图失败之后的回调
