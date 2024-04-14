@@ -69,7 +69,14 @@ const onMyClick = () => {
   }
 }
 
-const onVipClick = () => {}
+/**
+ * vip 按钮点击事件
+ */
+const onVipClick = () => {
+  // 配置跳转方式
+  store.commit('app/changeRouterType', 'push')
+  router.push('/member')
+}
 
 /**
  * 记录页面滚动位置
